@@ -84,7 +84,7 @@ export class BasicWorld {
         plane.castShadow = false;
         plane.receiveShadow = true;
         plane.rotation.x = -Math.PI / 2;
-        this.scene.add(plane);
+        //this.scene.add(plane);
 
         const box = new THREE.Mesh(
             new THREE.BoxGeometry(2, 2, 2),
