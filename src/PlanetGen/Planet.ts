@@ -1,8 +1,8 @@
 // will create six terrain faces and tell them which direciton they're facing
 import * as THREE from "three";
-import { TerrainFace } from "./TerrainFace";
+import TerrainFace from "./TerrainFace";
 
-export class Planet {
+export default class Planet {
     public resolution = 10;
 
     private _meshes: THREE.Mesh[];
@@ -28,7 +28,7 @@ export class Planet {
         for (let i = 0; i < 6; i++) {
             let mesh = new THREE.Mesh(
                 new THREE.BufferGeometry(),
-                new THREE.MeshStandardMaterial()
+                new THREE.MeshStandardMaterial({ wireframe: false })
             );
 
             this._meshes.push(mesh);

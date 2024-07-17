@@ -1,6 +1,6 @@
 import * as THREE from "three";
 
-export class TerrainFace {
+export default class TerrainFace {
     // The mesh object that will be created and modified
     private _mesh: THREE.Mesh;
 
@@ -61,6 +61,7 @@ export class TerrainFace {
                     );
 
                 // Assign the calculated position to the vertices array
+                pointOnUnitCube = pointOnUnitCube.normalize();
                 vertices[i * 3] = pointOnUnitCube.x;
                 vertices[i * 3 + 1] = pointOnUnitCube.y;
                 vertices[i * 3 + 2] = pointOnUnitCube.z;

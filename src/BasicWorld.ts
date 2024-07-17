@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/Addons.js";
 
-export class BasicWorld {
+export default class BasicWorld {
     private _threejs: THREE.WebGLRenderer;
     private _camera: THREE.PerspectiveCamera;
     public scene: THREE.Scene;
@@ -38,7 +38,7 @@ export class BasicWorld {
         this.scene = new THREE.Scene();
 
         // adding some light to that world
-        const light = new THREE.DirectionalLight(0xffffff, 3.0);
+        const light = new THREE.DirectionalLight(0xffffff, 1.0);
         light.position.set(100, 100, 100);
         light.target.position.set(0, 0, 0);
         light.castShadow = true;
@@ -53,7 +53,7 @@ export class BasicWorld {
         light.shadow.camera.bottom = -200;
         this.scene.add(light);
 
-        const l2 = new THREE.AmbientLight(0x404040);
+        const l2 = new THREE.AmbientLight(0xf0f0f0);
         this.scene.add(l2);
 
         // adding controls
