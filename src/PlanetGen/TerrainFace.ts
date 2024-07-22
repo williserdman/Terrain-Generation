@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import ShapeGenerator from "./ShapeGenerator";
 
 export default class TerrainFace {
     // The mesh object that will be created and modified
@@ -16,7 +17,15 @@ export default class TerrainFace {
     // Vector representing the other axis on the terrain face
     private _axisB: THREE.Vector3;
 
-    constructor(mesh: THREE.Mesh, resolution: number, localUp: THREE.Vector3) {
+    private _shapeGenerator: ShapeGenerator;
+
+    constructor(
+        shapeGenerator: ShapeGenerator,
+        mesh: THREE.Mesh,
+        resolution: number,
+        localUp: THREE.Vector3
+    ) {
+        this._shapeGenerator = shapeGenerator;
         this._mesh = mesh;
         this._resolution = resolution;
         this._localUp = localUp;
@@ -47,7 +56,7 @@ export default class TerrainFace {
                 );
 
                 // Calculate the position on the unit cube by adjusting with _axisA and _axisB
-                let pointOnUnitCube = new THREE.Vector3()
+                const pointOnUnitCube = new THREE.Vector3()
                     .copy(this._localUp)
                     .add(
                         this._axisA
@@ -61,10 +70,15 @@ export default class TerrainFace {
                     );
 
                 // Assign the calculated position to the vertices array
-                pointOnUnitCube = pointOnUnitCube.normalize();
-                vertices[i * 3] = pointOnUnitCube.x;
-                vertices[i * 3 + 1] = pointOnUnitCube.y;
-                vertices[i * 3 + 2] = pointOnUnitCube.z;
+                const pointOnUnitSphere = pointOnUnitCube.normalize();
+                const pointOnPlanet =
+                    this._shapeGenerator.CalculatePointOnPlanet(
+                        pointOnUnitSphere
+                    );
+
+                vertices[i * 3] = pointOnPlanet.x;
+                vertices[i * 3 + 1] = pointOnPlanet.y;
+                vertices[i * 3 + 2] = pointOnPlanet.z;
 
                 i++; // Move to the next vertex position
             }
