@@ -8,7 +8,7 @@ export default class ShapeGenerator {
 
     constructor(settings: ShapeSettings) {
         this._settings = settings;
-        this._noiseFilter = new NoiseFilter();
+        this._noiseFilter = new NoiseFilter(this._settings.noiseSettings);
     }
 
     public CalculatePointOnPlanet(

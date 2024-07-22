@@ -6,7 +6,7 @@ import ColorSettings from "../Settings/ColorSettings";
 import ShapeGenerator from "./ShapeGenerator";
 
 export default class Planet {
-    public resolution = 10;
+    public resolution = 100;
 
     private _meshes: THREE.Mesh[];
     private _terrainFace: TerrainFace[];
