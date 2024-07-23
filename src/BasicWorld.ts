@@ -21,6 +21,12 @@ export default class BasicWorld {
         // attaching threejs to the index.html
         document.body.appendChild(this._threejs.domElement);
 
+        // allowing an overlay
+        this._threejs.domElement.style.position = "fixed";
+        this._threejs.domElement.style.left = "0";
+        this._threejs.domElement.style.top = "0";
+        this._threejs.domElement.style.zIndex = "-1";
+
         // changing the dom element if screen changes size
         window.addEventListener("resize", () => {
             this._OnWindowResize();

@@ -4,17 +4,28 @@ import { NoiseFilter } from "./NoiseFilter";
 
 export default class ShapeGenerator {
     private _settings: ShapeSettings;
-    private _noiseFilter: NoiseFilter;
+    private _noiseFilters: NoiseFilter[];
 
     constructor(settings: ShapeSettings) {
         this._settings = settings;
-        this._noiseFilter = new NoiseFilter(this._settings.noiseSettings);
+        this._noiseFilters = [];
+        for (let i = 0; i < this._settings.noiseLayers.length; i++) {
+            this._noiseFilters.push(
+                new NoiseFilter(this._settings.noiseLayers[i].noiseSettings)
+            );
+        }
     }
 
     public CalculatePointOnPlanet(
         pointOnUnitSphere: THREE.Vector3
     ): THREE.Vector3 {
-        const elevation: number = this._noiseFilter.Evaluate(pointOnUnitSphere);
+        let elevation = 0;
+        for (let i = 0; i < this._noiseFilters.length; i++) {
+            if (this._settings.noiseLayers[i].enabled) {
+                elevation += this._noiseFilters[i].Evaluate(pointOnUnitSphere);
+            }
+        }
+
         return pointOnUnitSphere.multiplyScalar(
             this._settings.planetRadius * (1 + elevation)
         );

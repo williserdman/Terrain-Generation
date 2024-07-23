@@ -1,6 +1,7 @@
 import { createNoise3D } from "simplex-noise";
 import * as THREE from "three";
 import NoiseSettings from "./NoiseSettings";
+import { max } from "three/examples/jsm/nodes/Nodes.js";
 
 export class NoiseFilter {
     private _noise = createNoise3D();
@@ -44,6 +45,7 @@ export class NoiseFilter {
             amplitude *= this._noiseSettings.persistance;
         }
 
+        noiseValue = Math.max(0, noiseValue - this._noiseSettings.minValue);
         return noiseValue * this._noiseSettings.strength;
     }
 }
